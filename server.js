@@ -1,40 +1,45 @@
-const express = require('express');
+// Passo 1: Importar o nosso "controle remoto" inteligente do Prisma
+import { PrismaClient } from '@prisma/client';
+
+// Importar o Express (como antes)
+import express from 'express';
+
+// Passo 2: Criar uma instância do nosso controle remoto
+// É como pegar o controle remoto da caixa e colocar pilha nele.
+const prisma = new PrismaClient();
 const app = express();
-app.use(express.json()); // Nosso porteiro/tradutor de JSON
+    
+app.use(express.json());
 
 const PORT = 3000;
 
-// NOSSA "MEMÓRIA" TEMPORÁRIA (nosso banco de dados falso)
-const users = [];
-
-// ROTA Nº 1: LISTAR TODOS OS USUÁRIOS (READ)
-// Método GET: usado para buscar/ler informações.
-app.get('/users', (request, response) => {
-    response.json(users); // Responde com a lista completa de usuários em formato JSON.
+// ROTA Nº 1: LISTAR TODOS OS USUÁRIOS (AGORA DO BANCO DE DADOS)
+// Marcamos a função com 'async' porque ela vai ter que esperar o banco de dados.
+app.get('/users', async (request, response) => {
+    // Usamos o Prisma para encontrar todos ('findMany') os registros na tabela 'user'.
+    const users = await prisma.user.findMany();
+    
+    response.json(users);
 });
 
-// ROTA Nº 2: CADASTRAR UM NOVO USUÁRIO (CREATE)
-// Método POST: usado para criar/enviar informações novas.
-app.post('/users', (request, response) => {
-    // Pega o nome e o email que foram enviados no "corpo" da requisição.
+// ROTA Nº 2: CADASTRAR UM NOVO USUÁRIO (AGORA NO BANCO DE DADOS)
+// Também é 'async'
+app.post('/users', async (request, response) => {
+    // Pega os dados do corpo da requisição (como antes).
     const { name, email } = request.body;
 
-    // Cria um novo objeto de usuário.
-    const newUser = {
-        id: users.length + 1, // Cria um ID simples (não faça isso em produção!)
-        name: name,
-        email: email
-    };
+    // Usa o Prisma para criar ('create') um novo registro na tabela 'user'.
+    // A gente passa um objeto 'data' com os dados que queremos inserir.
+    const newUser = await prisma.user.create({
+        data: {
+            name: name,
+            email: email,
+        },
+    });
 
-    // Adiciona o novo usuário na nossa lista.
-    users.push(newUser);
-
-    // Responde com o usuário que acabou de ser criado e um status 201 (Created).
     response.status(201).json(newUser);
 });
 
-
 app.listen(PORT, () => {
     console.log(`Servidor rodando e escutando em http://localhost:${PORT}`);
-    console.log('Para derrubar o servidor, aperte Ctrl + C no terminal.');
 });

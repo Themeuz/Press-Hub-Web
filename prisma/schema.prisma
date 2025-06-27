@@ -1,0 +1,20 @@
+// Este é o bloco que diz ao Prisma como gerar o cliente que usaremos no nosso código.
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Este bloco diz ao Prisma qual banco de dados usar.
+datasource db {
+  provider = "postgresql"
+  // A mágica acontece aqui: ele lê o "segredo" que guardamos no arquivo .env
+  url      = env("DATABASE_URL")
+}
+
+// Nosso primeiro modelo! A nossa "tabela" de usuários.
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
