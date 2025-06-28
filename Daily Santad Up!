@@ -1,0 +1,19 @@
+Daily Santad Up!
+
+Dia 27 de Junho de 2025, Rio de Janeiro, Macaé.
+
+* Foi montado um ambiente desenvolvido a nível profissional com WSL, Postgres e Node.JS.
+
+* Alguns bugs de senha, permissão e terminal (BASH, CMD vs WSL), no caminho foram resolvidos com uma simples resolução de teste reverso.
+
+* Prisma e suas pontes foram instalados para que possa se comunicar de maneira mais profissinal com o banco de dados (Postgres)
+
+* Foi criada a primeira /migration/, construindo assim a tabela User no banco de dados 
+
+* Refatoramento do server.js para usar o Prisma de maneira correta e conecta-lo ao banco de dados de maneira sólid
+
+* Todas as mudanças e alterações foram salvas e relatadas no GitHub através do git, controlando o versionamento do código e suas documentações
+
+
+-------------------- // ------------------------- // ---------------------- 
+

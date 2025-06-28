@@ -1,0 +1,109 @@
+Documentação Sistema
+
+## Arquivo: server.js
+
+Este arquivo é o coração do nosso projeto de back-end. Ele é responsável por criar o servidor, definir as rotas da nossa API e conectá-las à lógica do banco de dados.
+
+### 1. Importações e Configuração Inicial
+
+    import { PrismaClient } from '@prisma/client';: Importa o "controle remoto" inteligente que o Prisma gerou para nós. É através dele que vamos conversar com o banco de dados.
+
+    import express from 'express';: Importa o Express, que é o nosso framework para construir o servidor e as rotas da API de forma organizada.
+
+    const prisma = new PrismaClient();: Cria uma instância do controle remoto do Prisma. A gente vai usar essa variável prisma para todas as operações no banco de dados.
+
+    const app = express();: Cria a nossa aplicação Express. A variável app representa o nosso servidor.
+
+    const PORT = 3000;: Define uma constante para a "porta" onde nosso servidor vai funcionar. Usar uma constante torna o código mais fácil de ler e manter.
+
+### 2. Middleware
+
+    app.use(express.json());: Este é um middleware essencial. Ele funciona como um "tradutor" que fica na porta de entrada do servidor. Qualquer requisição que chegue com um corpo (body) em formato JSON, ele traduz para um objeto JavaScript e o anexa em request.body, para que nossas rotas possam usá-lo facilmente. Ele precisa vir antes da definição das rotas.
+
+### 3. Rotas da API (Endpoints)
+
+Rotas são os "endereços" do nosso servidor que executam ações específicas.
+
+#### Rota: GET /users
+
+    O que faz?: Lista todos os usuários cadastrados no banco de dados.
+
+    Método HTTP: GET
+
+    Como funciona?:
+
+        A função é declarada como async para podermos usar await.
+
+        await prisma.user.findMany(): Usamos o Prisma para pedir ao banco: "encontre todos (findMany) os registros na tabela User". O await pausa a execução da função até o banco de dados responder.
+
+        response.json(users): Pega a lista de usuários que o banco retornou e a envia de volta para o cliente (navegador ou Thunder Client) em formato JSON.
+
+#### Rota: POST /users
+
+    O que faz?: Cria (cadastra) um novo usuário no banco de dados.
+
+    Método HTTP: POST
+
+    Como funciona?:
+
+        const { name, email } = request.body;: Pega os dados name e email que vieram no corpo da requisição (graças ao express.json()).
+
+        await prisma.user.create({ ... }): Usa o Prisma para criar (create) um novo registro. Passamos um objeto data especificando os valores para as colunas name e email.
+
+        response.status(201).json(newUser): Responde ao cliente com o usuário que acabou de ser criado (incluindo o id e as datas que o banco gerou) e o status 201 Created, que é o código HTTP padrão para "recurso criado com sucesso".
+
+#### Rota: GET /users/:id
+
+    O que faz?: Busca um único usuário específico pelo seu ID.
+
+    Método HTTP: GET
+
+    Como funciona?:
+
+        '/users/:id': O :id define um "parâmetro de rota". Isso significa que o Express vai capturar qualquer valor que for colocado nessa posição da URL.
+
+        const id = parseInt(request.params.id);: Pega o valor do parâmetro da URL (que sempre vem como texto) e o converte para um número inteiro.
+
+        await prisma.user.findUnique({ where: { id: id } });: Usa o Prisma para buscar um registro único (findUnique) onde (where) a coluna id seja igual ao id que recebemos da URL.
+
+        if (!user) { ... }: Se o Prisma não encontrar ninguém com aquele ID, a variável user será null. A condição !user se torna verdadeira, e nós retornamos um erro 404 Not Found para o cliente.
+
+        response.json(user): Se o usuário foi encontrado, ele é enviado de volta como resposta.
+
+### 4. Inicialização do Servidor
+
+    app.listen(PORT, () => { ... });: O comando que efetivamente "liga" o nosso servidor e o coloca para "escutar" por requisições na porta que definimos na constante PORT. A função de callback () => { ... } é executada uma única vez, assim que o servidor liga com sucesso.
+
+    #### Rota: PUT /users/:id
+
+    O que faz?: Atualiza as informações de um usuário existente.
+
+    Método HTTP: PUT (usado para substituir um recurso existente).
+
+    Como funciona?:
+
+        Como a rota GET /users/:id, ela captura o id da URL e o converte para número.
+
+        Ela também captura os novos name e email que vêm no corpo (body) da requisição.
+
+        await prisma.user.update({ ... }): O comando principal.
+
+            where: { id: id }: Especifica qual usuário deve ser atualizado.
+
+            data: { ... }: Contém os novos dados que serão salvos no banco.
+
+        response.json(updatedUser): Responde com os dados do usuário já atualizado.
+
+#### Rota: DELETE /users/:id
+
+    O que faz?: Apaga permanentemente um usuário do banco de dados.
+
+    Método HTTP: DELETE
+
+    Como funciona?:
+
+        Captura o id da URL, da mesma forma que as outras rotas.
+
+        await prisma.user.delete({ where: { id: id } });: O comando é direto. Ele simplesmente deleta o registro que corresponde ao id fornecido.
+
+        response.status(204).send(): Responde com o status 204 No Content. Este é o código HTTP padrão para "operação bem-sucedida, mas não há nada para te enviar de volta no corpo da resposta".
