@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-import express from 'express';
-import cors from 'cors';
-
+const { PrismaClient } = require('@prisma/client');
+const express = require('express');
+const cors = require('cors');
 const prisma = new PrismaClient();
 const app = express();
 
@@ -69,4 +68,58 @@ app.delete('/users/:id', async (request, response) => {
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando e escutando em http://localhost:${PORT}`);
+});
+
+// =============================================
+// ROTAS PARA O CRUD DE JOGOS (GAMES)
+// =============================================
+
+// Rota para listar todos os jogos
+app.get('/games', async (request, response) => {
+    const games = await prisma.game.findMany();
+    response.json(games);
+});
+
+// Rota para cadastrar um novo jogo
+app.post('/games', async (request, response) => {
+    const { title, platform, releaseDate } = request.body;
+
+    console.log("--- INTERROGANDO O OBJETO PRISMA ---");
+    console.log("As chaves disponíveis no 'prisma' são:", Object.keys(prisma));
+    console.log("------------------------------------");
+    
+    const newGame = await prisma.game.create({
+        data: {
+            title: title,
+            platform: platform,
+            // Datas precisam estar no formato ISO 8601 (ex: "2025-12-31T00:00:00.000Z")
+            releaseDate: new Date(releaseDate), 
+        },
+    });
+    response.status(201).json(newGame);
+});
+
+// Rota para atualizar um jogo existente
+app.put('/games/:id', async (request, response) => {
+    const id = parseInt(request.params.id);
+    const { title, platform, releaseDate } = request.body;
+
+    const updatedGame = await prisma.game.update({
+        where: { id: id },
+        data: {
+            title: title,
+            platform: platform,
+            releaseDate: new Date(releaseDate),
+        },
+    });
+    response.json(updatedGame);
+});
+
+// Rota para deletar um jogo
+app.delete('/games/:id', async (request, response) => {
+    const id = parseInt(request.params.id);
+    await prisma.game.delete({
+        where: { id: id },
+    });
+    response.status(204).send();
 });

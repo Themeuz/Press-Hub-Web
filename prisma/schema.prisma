@@ -18,3 +18,13 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// Modelo para a nossa tabela de Jogos
+model Game {
+  id          Int      @id @default(autoincrement())
+  title       String
+  platform    String
+  releaseDate DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
