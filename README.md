@@ -1,7 +1,7 @@
-# Press Hub Nuuvem - API
+# Press Hub Web - API
 
 Press Hub é um projeto idealizado e concebido por Mariana 'Mari' Amaro, é uma plataforma dedicada a
-centralizar e otimizar as parcerias da empresa Nuuvem com seus influenciadores digitais e imprensa.
+centralizar e otimizar as parcerias da empresa com seus influenciadores digitais e imprensa.
 
 E este Software tem o objetivo de gerenciar a logistica entre o negócio, os dados e a comunicação com
 a empresa e os terceiros, com uma plataforma dedicada puramente a um banco de dados robusto.
@@ -54,14 +54,14 @@ agendamento e atribuição de tarefas.
 
 **1. Clone o repositório:**
 ```
-git clone https://github.com/Themeuz/Press-Hub-Nuuvem.git
+git clone https://github.com/Themeuz/Press-Hub-Web.git
 
 ```
 
 **2. Navegue até a pasta do prijeto:**
 
 ```
-cd Press-Hub-Nuuvem
+cd Press-Hub-Web
 
 ```
 
