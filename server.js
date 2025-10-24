@@ -7,7 +7,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; // <<< Rodando na porta 3001
 
 // Middlewares
 app.use(express.json()); // Para o Express entender JSON
@@ -18,8 +18,8 @@ const userRoutes = require('./routes/users');
 const gameRoutes = require('./routes/games');
 
 // --- Usar as Rotas ---
-app.use('/api/users', userRoutes); // Qualquer chamada para /api/users usará o arquivo users.js
-app.use('/api/games', gameRoutes); // Qualquer chamada para /api/games usará o arquivo games.js
+app.use('/api/users', userRoutes); // <<< Caminho /api/users
+app.use('/api/games', gameRoutes); // <<< Caminho /api/games
 
 // Rota de teste
 app.get('/', (req, res) => {

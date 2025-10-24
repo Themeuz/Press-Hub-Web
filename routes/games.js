@@ -4,7 +4,7 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// GET: lista todos os jogos da plataforma
+// GET: Listar todos os jogos
 router.get('/', async (req, res) => {
   try {
     const games = await prisma.game.findMany();
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST: Usado para criar uma nova tabela de jogo
+// POST: Criar um novo jogo
 router.post('/', async (req, res) => {
   const { title, platform, releaseDate } = req.body;
   try {
@@ -22,8 +22,6 @@ router.post('/', async (req, res) => {
       data: {
         title,
         platform,
-        // O Prismo só entende em formato ISO
-        // O new Date() ajuda a formatar se o front mandar uma string simples
         releaseDate: new Date(releaseDate), 
       },
     });

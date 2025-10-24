@@ -19,10 +19,7 @@ router.post('/', async (req, res) => {
   const { email, name } = req.body;
   try {
     const newUser = await prisma.user.create({
-      data: {
-        email,
-        name,
-      },
+      data: { email, name },
     });
     res.status(201).json(newUser);
   } catch (error) {
@@ -30,6 +27,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// (Área para adicionar GET por ID, PUT e DELETE depois)
+// (Adicione aqui as rotas de GET por ID, PUT e DELETE quando precisar)
 
 module.exports = router;
