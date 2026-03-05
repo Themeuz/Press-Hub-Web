@@ -40,3 +40,5 @@ Atualmente, a API possui as seguintes funcionalidades 100% implementadas:
 - [x] **Rastreador de Hashtag** (/hashtag): Utilizado para rastrear via web-scrapping temas com maior aproveitamento de público.
 - [ ] **Sistema de Solicitação de Chaves:** Ferramenta para parceiros solicitarem chaves de jogos para análise e promoção, 
 com um "Medidor de Hype" para indicar títulos em alta. (em progresso...)
+
+(Projeto pausado -- O foco está na parte UX/UI, ele está linkado [aqui](https://github.com/Themeuz/press-hub-frontend) maiores informações, durante o desenvolvimento.)
