@@ -39,15 +39,7 @@ Atualmente, a API possui as seguintes funcionalidades 100% implementadas:
 - [x] **CRUD completo de Jogos** (/games): Sistema completo para criar, ler, atualizar e deletar jogos na plataforma.
 - [x] **Rastreador de Hashtag** (/hashtag): Utilizado para rastrear via web-scrapping temas com maior aproveitamento de público.
 - [ ] **Sistema de Solicitação de Chaves:** Ferramenta para parceiros solicitarem chaves de jogos para análise e promoção, 
-com um "Medidor de Hype" para indicar títulos em alta.
-- [ ] **Gerenciamento de Campanhas:** Módulo para criar e gerenciar campanhas de marketing com os parceiros, incluindo 
-agendamento e atribuição de tarefas.
-- [ ] **Envio de Evidências:** Sistema para os parceiros subirem links e materiais dos conteúdos criados (vídeos, artigos, etc.)
- como prova de campanha.
-- [ ] **Programa de Incentivos:** Gamificação com recompensas (Drops, cupons exclusivos) baseadas em performance e engajamento
-  contínuo.
-- [ ] **Comunicação Integrada:** Hub de releases e atualizações importantes para a imprensa e influenciadores, com distribuição
- personalizada.
+com um "Medidor de Hype" para indicar títulos em alta. (em progresso...)
 - [ ] **Dashboard de Performance:** Painel com relatórios dinâmicos sobre receita gerada, cobertura de mídia e engajamento das campanhas. 
 - [ ] **Relatórios Automatizados:** Geração automática de relatórios de performance mensais para análise e tomada de decisão.
 
