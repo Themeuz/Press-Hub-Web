@@ -32,7 +32,7 @@ apropriado para CRUD e Software de alta tensidades.
 - **Prisma** ORM de última geração para a comunicação segura e intuitiva para com o Banco de Dados de maneira interna.
 - **CORS** Middleware para habilitar compartilhamento de recursos entre o back-end e o front-end, dois repositórios.
 
-##  Roadmap do Projeto
+## Checklist
 Atualmente, a API possui as seguintes funcionalidades 100% implementadas:
 
 - [x] **CRUD completo de Usuários** (/users): Sistema completo para criar, ler, atualizar e deletar usuários (parceiros).
